@@ -16,3 +16,11 @@ db.getCollection("massive-data").aggregate([
 ])
 
 // end 2 
+
+
+// 3___Find the average age of individuals for each favorite fruit, then sort the results in descending order of average age
+
+db.getCollection("massive-data").aggregate([
+    { $group: { _id: "$favoriteFruit", averageAge: { $avg: "$age" } } },
+    { $sort: { averageAge: -1 } }
+])
