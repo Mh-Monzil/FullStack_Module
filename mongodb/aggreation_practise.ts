@@ -24,3 +24,16 @@ db.getCollection("massive-data").aggregate([
     { $group: { _id: "$favoriteFruit", averageAge: { $avg: "$age" } } },
     { $sort: { averageAge: -1 } }
 ])
+
+// end 3
+
+
+// 4___Retrieve a list of unique friend names for individuals who have at least one friend, and include only the friends with names starting with the letter "W."
+
+db.getCollection("massive-data").aggregate([
+    { $match: { friends: { $exists: true, $ne: [] } } },
+    {$unwind: "$friends"},
+    {$match: {"friends.name": {$regex: "^W"}}},
+    {$group: { _id: "null", uniqueFriendNames: {$addToSet: "$friends.name"}}}
+
+])
